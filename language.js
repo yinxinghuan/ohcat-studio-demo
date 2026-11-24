@@ -348,11 +348,15 @@ const english = new Map(
 
 const chineseChar = /[\u3400-\u9fff。]/;
 const languageKey = 'ohcat-studio-language';
-const requestedLocale = new URLSearchParams(location.search).get('lang');
-let locale = ['zh','en'].includes(requestedLocale) ? requestedLocale : 'zh';
-if (!requestedLocale) {
-  try { if (localStorage.getItem(languageKey) === 'en') locale = 'en'; } catch {}
+
+function initialLocale() {
+  const requested = new URLSearchParams(location.search).get('lang');
+  if (requested === 'en' || requested === 'zh') return requested;
+  try { if (localStorage.getItem(languageKey) === 'zh') return 'zh'; } catch {}
+  return 'en';
 }
+
+let locale = initialLocale();
 
 function uiLanguage() { return locale; }
 function uiText(original) {
