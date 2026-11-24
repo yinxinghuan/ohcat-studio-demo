@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#141613">
+<meta name="description" content="OHCAT 星球交互原型。从一句话开始创作，发现其他创作者的作品。">
+<title>OHCAT 星球 · 让想法有画面</title>
+<link rel="icon" href="./ohcat-favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="./styles.css">
+<link rel="stylesheet" href="./brand.css">
+<script src="./language.js" defer></script>
+<script src="./app.js" defer></script>
+<script src="./spaces.js" defer></script>
+</head>
+<body>
+<svg class="symbol-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <symbol id="spark" viewBox="0 0 24 24"><path d="M12 2.5c1.35 5.5 3.5 7.65 9 9-5.5 1.35-7.65 3.5-9 9-1.35-5.5-3.5-7.65-9-9 5.5-1.35 7.65-3.5 9-9Z"/></symbol>
+  <symbol id="film" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m10 9 5 3-5 3V9Z"/></symbol>
+  <symbol id="canvas" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M8 9h8M8 13h4m-4 4h6"/></symbol>
+  <symbol id="agent" viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="13" rx="4"/><path d="M12 7V3m-3 9h.01m6 0h.01m-5 4h4"/></symbol>
+  <symbol id="folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></symbol>
+  <symbol id="search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="5.5"/><path d="m15 15 4.5 4.5"/></symbol>
+  <symbol id="heart" viewBox="0 0 24 24"><path d="M20.8 9c0 4.7-8.8 9.7-8.8 9.7S3.2 13.7 3.2 9c0-3.8 5-5.6 8.8-1.8C15.8 3.4 20.8 5.2 20.8 9Z"/></symbol>
+  <symbol id="bookmark" viewBox="0 0 24 24"><path d="M6 5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v15l-6-4-6 4V5Z"/></symbol>
+  <symbol id="play" viewBox="0 0 24 24"><path d="m8 5 12 7-12 7V5Z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+  <symbol id="check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+  <symbol id="plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m4 16 5-5 4 4 3-3 4 4M16 8h.01"/></symbol>
+</svg>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#create" aria-label="OHCAT 星球首页">
+      <picture>
+        <source media="(max-width: 389px)" srcset="./ohcat-symbol.svg">
+        <img class="brand-image" src="./ohcat-wordmark.svg" alt="" width="278" height="56">
+      </picture>
+    </a>
+    <nav class="main-nav" aria-label="主导航">
+      <a href="#community" data-nav="community">星球社区</a>
+      <a href="#market" data-nav="hall">创意大厅</a>
+      <a href="#create" data-nav="planet" aria-current="page">我的星球</a>
+    </nav>
+    <div class="header-actions">
+      <button class="language-toggle" id="language-toggle" type="button" data-no-translate lang="en" aria-label="Switch to English">EN</button>
+      <a class="projects-button" href="#planet/projects" aria-label="我的项目"><svg class="icon"><use href="#folder"/></svg><span>我的项目</span></a>
+    </div>
+  </div>
+</header>
+
+<main class="page">
+  <section class="hero" id="create" aria-labelledby="hero-title">
+    <div class="hero-art"><img src="./orbit-cat.jpg" alt="" fetchpriority="high"></div>
+    <div class="hero-content">
+      <div class="hero-kicker"><svg class="icon"><use href="#spark"/></svg> AI 创作工作台</div>
+      <h1 id="hero-title"><b>让想法</b><span>有画面</span><i>。</i></h1>
+      <p class="hero-intro">从一句话、一张画布，或一个还没想清楚的点子开始。</p>
+      <form id="composer" class="composer">
+        <div class="mode-tabs" role="tablist" aria-label="创作方式">
+          <button type="button" role="tab" id="mode-film" aria-selected="true" aria-controls="compose-panel" data-mode="film"><svg class="icon"><use href="#film"/></svg> 一句话成片</button>
+          <button type="button" role="tab" id="mode-canvas" aria-selected="false" aria-controls="compose-panel" tabindex="-1" data-mode="canvas"><svg class="icon"><use href="#canvas"/></svg> 画布</button>
+          <button type="button" role="tab" id="mode-agent" aria-selected="false" aria-controls="compose-panel" tabindex="-1" data-mode="agent"><svg class="icon"><use href="#agent"/></svg> Agent</button>
+        </div>
+        <div class="compose-panel" id="compose-panel" role="tabpanel" aria-labelledby="mode-film">
+          <label class="sr-only" for="idea">描述你的创意</label>
+          <textarea id="idea" maxlength="500" rows="2" placeholder="想拍什么？试试「一只猫在粉红色的月球上迷路」"></textarea>
+          <div class="composer-bottom">
+            <button class="sample-button" id="example" type="button"><svg class="icon"><use href="#spark"/></svg> <span>试个灵感</span></button>
+            <button class="primary-button" type="submit"><span id="create-label">开始创作</span><svg class="icon"><use href="#spark"/></svg></button>
+          </div>
+        </div>
+      </form>
+      <div class="hero-mobile-caption">交互演示 · 可体验创建草稿与分镜</div>
+    </div>
+  </section>
+
+  <section id="discover" class="discover" aria-labelledby="discover-title">
+    <div class="section-bar">
+      <div>
+        <h2 id="discover-title">发现作品</h2>
+        <p id="discover-description">看看其他创作者怎么把想法做出来。</p>
+      </div>
+      <div class="gallery-tools">
+        <div class="filters" role="group" aria-label="作品类型">
+          <button type="button" data-filter="全部" aria-pressed="true">全部</button>
+          <button type="button" data-filter="短片" aria-pressed="false">短片</button>
+          <button type="button" data-filter="概念设计" aria-pressed="false">概念设计</button>
+          <button type="button" data-filter="角色设计" aria-pressed="false">角色设计</button>
+        </div>
+        <button type="button" id="search-toggle" class="icon-button" aria-label="搜索作品" aria-expanded="false" aria-controls="search-form"><svg class="icon"><use href="#search"/></svg></button>
+      </div>
+    </div>
+    <div id="community-nav" hidden></div>
+    <div id="search-form" class="search-form" hidden><label class="sr-only" for="work-search">搜索标题或作者</label><svg class="icon"><use href="#search"/></svg><input id="work-search" type="search" placeholder="搜索标题或作者"></div>
+    <div class="work-grid" id="work-grid" aria-live="polite"></div>
+    <section class="orbit-preview" id="orbit-preview" aria-labelledby="orbit-preview-title" hidden></section>
+    <div class="gallery-end" id="gallery-end"><a class="secondary-button" href="#community">进入星球社区</a></div>
+  </section>
+  <section id="planet-home" class="workspace-home" aria-label="我的星球"></section>
+  <section id="route-view" class="route-view" hidden></section>
+</main>
+<footer class="footer"><img class="footer-brand" src="./ohcat-wordmark.svg" alt="OHCAT" width="278" height="56"><span>交互演示 · 示例作品</span></footer>
+
+<dialog id="modal" class="modal" aria-labelledby="modal-title">
+  <button class="icon-button close-button" type="button" id="modal-close" aria-label="关闭窗口"><svg class="icon"><use href="#close"/></svg></button>
+  <div id="modal-body"></div>
+</dialog>
+<div id="toast" class="toast" role="status"></div>
+</body>
+</html>
